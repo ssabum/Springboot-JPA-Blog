@@ -1,6 +1,5 @@
 package com.kjbank.blog.test;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -9,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -62,16 +62,13 @@ public class DummyControllerTest {
 		return userRepository.findAll();
 	}
 	
-//	@GetMapping("/dummy/user")
-//	public List<User> pageList(@PageableDefault(size=2, sort="id", direction=Sort.Direction.DESC) Pageable pageable) {
-//		Page<User> pagingUser = userRepository.findAll(pageable);
-//		
-//		if(pagingUser.isLast()) {
-//			
-//		}
-//		List<User> users = pagingUser.getContent();
-//		return users;
-//	}
+	@GetMapping("/dummy/user")
+	public List<User> pageList(@PageableDefault(size=2, sort="id", direction=Sort.Direction.DESC) Pageable pageable) {
+		Page<User> pagingUser = userRepository.findAll(pageable);
+		
+		List<User> users = pagingUser.getContent();
+		return users;
+	}
 	
 	@GetMapping("/dummy/user/{id}")
 	public User detail(@PathVariable int id) {
